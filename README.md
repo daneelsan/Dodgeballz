@@ -1,6 +1,8 @@
 # DodgeBallz
 
-[DodgeBalls](https://github.com/daneelsan/DodgeBalls) implemented in zig.
+Play the game at: https://daneelsan.github.io/Dodgeballz/
+
+[DodgeBalls](https://github.com/daneelsan/DodgeBalls) implemented in zig (compiled to wasm-freestanding).
 
 This mini game shows how Zig, WASM, Javascript and HTML5 canvas can interact.
 
