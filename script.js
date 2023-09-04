@@ -66,9 +66,10 @@ function jsConsoleLogVector2D(x, y) {
     console.log("{x: " + x + ", y:" + y + "}");
 }
 
+// See build.zig for reasoning
 var memory = new WebAssembly.Memory({
-    initial: 10 /* pages */,
-    maximum: 10 /* pages */,
+    initial: 17 /* pages */,
+    maximum: 17 /* pages */,
 });
 
 const wasm = {
@@ -91,7 +92,7 @@ const wasm = {
 };
 
 function loadGame() {
-    WebAssembly.instantiateStreaming(fetch("game.wasm"), wasm.imports).then((result) => {
+    WebAssembly.instantiateStreaming(fetch("zig-out/lib/DodgeBallz.wasm"), wasm.imports).then((result) => {
         wasm.exports = result.instance.exports;
         window.addEventListener("keydown", (event) => {
             const key = event.key;
