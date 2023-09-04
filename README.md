@@ -13,13 +13,18 @@ Among those imported functions are functions that draw things on a canvas, e.g. 
 
 ## Build
 
-To build the wasm module, run:
-
+Tested in version:
 ```shell
-$ zig build game -Drelease=true --verbose
+$ zig version
+0.12.0-dev.271+5cc1831ca
+```
 
-$ ls game.*
-game.o    game.wasm (7.2K)
+To build the wasm module, run:
+```shell
+$ zig build
+
+$ ls zig-out/lib/
+DodgeBallz.wasm
 ```
 
 ## Run
