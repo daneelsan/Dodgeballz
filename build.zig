@@ -1,9 +1,8 @@
 const std = @import("std");
 
-const page_size = 65536; // in bytes
 // Initial and max memory must correspond to the memory size defined in script.js.
 // TODO: This used to be 10 pages. Find out why this needs 17 pages.
-const wasm_initial_memory = 17 * page_size;
+const wasm_initial_memory = 17 * std.wasm.page_size;
 const wasm_max_memory = wasm_initial_memory;
 
 pub fn build(b: *std.build.Builder) void {
