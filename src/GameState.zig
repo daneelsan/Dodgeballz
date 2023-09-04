@@ -72,7 +72,7 @@ pub fn handleCollisions(self: *Self) void {
             return;
         }
 
-        for (self.projectiles.array_list.items) |*projectile, p_i| {
+        for (self.projectiles.array_list.items, 0..) |*projectile, p_i| {
             if (Ball2D.collision(projectile.ball, enemy.ball)) {
                 // If a projectile and an enemy collide, we do 3 things:
                 //    * Delete the projectile

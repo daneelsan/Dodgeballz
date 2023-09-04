@@ -81,7 +81,7 @@ pub const EnemyArrayList = struct {
             const pos = board.getRandomPosition(radius);
             // New enemies will move towards the current position of the player.
             const vel = Vector2D.direction(player.ball.pos, pos).scalarMultiply(initial_speed);
-            const color = enemy_colors[@floatToInt(usize, JS.random() * 5)];
+            const color = enemy_colors[@as(usize, @intFromFloat(JS.random() * 5))];
 
             const enemy = Enemy.init(pos, vel, radius, color);
             self.push(game_state, enemy);
