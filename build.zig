@@ -21,6 +21,7 @@ pub fn build(b: *std.build.Builder) void {
 
     // https://github.com/ziglang/zig/issues/8633
     lib.global_base = 6560;
+    lib.rdynamic = true;
     lib.import_memory = true; // import linear memory from the environment
     lib.initial_memory = wasm_initial_memory; // initial size of the linear memory (1 page = 64kB)
     lib.max_memory = wasm_initial_memory; // maximum size of the linear memory
