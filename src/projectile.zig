@@ -83,7 +83,7 @@ pub const ProjectileArrayList = struct {
 
         var i: usize = 0;
         while (i < self.count()) {
-            var projectile = &items[i];
+            const projectile = &items[i];
             if (board.isOutOfBoundary(projectile.ball)) {
                 // Don't update the index if we remove an item from the list, it still valid.
                 self.delete(i);

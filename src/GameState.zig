@@ -27,17 +27,13 @@ const Self = @This();
 
 pub fn init(allocator: Allocator, board_width: f32, board_height: f32) Self {
     var board = Board.init(board_width, board_height);
-    var player = Player.init(board.center());
-    var enemies = EnemyArrayList.init();
-    var projectiles = ProjectileArrayList.init();
-    var particles = ParticleArrayList.init();
     return .{
         .allocator = allocator,
         .board = board,
-        .player = player,
-        .enemies = enemies,
-        .projectiles = projectiles,
-        .particles = particles,
+        .player = Player.init(board.center()),
+        .enemies = EnemyArrayList.init(),
+        .projectiles = ProjectileArrayList.init(),
+        .particles = ParticleArrayList.init(),
     };
 }
 

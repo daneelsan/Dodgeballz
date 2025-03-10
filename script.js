@@ -92,7 +92,7 @@ const wasm = {
 };
 
 function loadGame() {
-    WebAssembly.instantiateStreaming(fetch("zig-out/lib/DodgeBallz.wasm"), wasm.imports).then((result) => {
+    WebAssembly.instantiateStreaming(fetch("zig-out/bin/DodgeBallz.wasm"), wasm.imports).then((result) => {
         wasm.exports = result.instance.exports;
         window.addEventListener("keydown", (event) => {
             const key = event.key;

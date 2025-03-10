@@ -94,7 +94,7 @@ pub const EnemyArrayList = struct {
 
         var i: usize = 0;
         while (i < self.count()) {
-            var enemy = &items[i];
+            const enemy = &items[i];
             const is_out = board.isOutOfBoundary(enemy.ball);
             if (is_out or enemy.ball.radius < min_radius) {
                 if (!is_out) {

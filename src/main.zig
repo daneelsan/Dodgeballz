@@ -14,7 +14,7 @@ export fn game_init(board_width: f32, board_height: f32) void {
     // To use as an slice, we take the address of the first element and cast it into a slice of bytes.
     // We pass the memory size using build options (see build.zing).
     var memory_buffer_ptr: [*]u8 = @ptrCast(&memory);
-    var memory_buffer = memory_buffer_ptr[0..build_options.memory_size];
+    const memory_buffer = memory_buffer_ptr[0..build_options.memory_size];
 
     // When the upper bound of memory can be established, FixedBufferAllocator is a great choice.
     fixed_buffer = std.heap.FixedBufferAllocator.init(memory_buffer);

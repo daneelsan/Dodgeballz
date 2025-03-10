@@ -14,12 +14,14 @@ Among those imported functions are functions that draw things on a canvas, e.g. 
 ## Build
 
 Tested in version:
+
 ```shell
 $ zig version
-0.12.0-dev.271+5cc1831ca
+0.14.0
 ```
 
 To build the wasm module, run:
+
 ```shell
 $ zig build
 

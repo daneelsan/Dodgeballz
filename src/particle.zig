@@ -90,7 +90,7 @@ pub const ParticleArrayList = struct {
 
         var i: usize = 0;
         while (i < self.count()) {
-            var particle = &items[i];
+            const particle = &items[i];
             if (particle.ball.color.a <= 0.0 or board.isOutOfBoundary(particle.ball)) {
                 // Don't update the index if we remove an item from the list, it still valid.
                 self.delete(i);
