@@ -61,7 +61,7 @@ pub fn shootProjectile(self: *Self, client_pos: Vector2D) void {
 pub fn handleCollisions(self: *Self) void {
     const player = self.player;
 
-    for (self.enemies.array_list.items) |*enemy| {
+    for (self.enemies.array_list.items, 0..) |*enemy, e_i| {
         if (Ball2D.collision(player.ball, enemy.ball)) {
             // If some enemy touches the player, game over.
             self.game_over = true;
@@ -74,6 +74,7 @@ pub fn handleCollisions(self: *Self) void {
                 //    * Delete the projectile
                 //    * Generate impact particles
                 //    * reduce the radius of the enemy
+                JS.Console.log("Enemy {d} hit!\n", .{e_i});
                 self.projectiles.delete(p_i);
                 self.particles.generate(self, enemy, projectile);
                 enemy.ball.radius *= 0.8;

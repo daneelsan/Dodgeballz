@@ -12,21 +12,19 @@ const Vector2D = utils.Vector2D;
 pub const Projectile = struct {
     ball: Ball2D,
 
-    const Self = @This();
-
-    pub fn init(pos: Vector2D, vel: Vector2D, radius: f32, color: RGBColor) Self {
+    pub fn init(pos: Vector2D, vel: Vector2D, radius: f32, color: RGBColor) Projectile {
         assert(0.0 <= radius);
         return .{
             .ball = Ball2D.init(pos, vel, radius, color),
         };
     }
 
-    pub fn update(self: *Self) void {
+    pub fn update(self: *Projectile) void {
         self.ball.pos.x += self.ball.vel.x;
         self.ball.pos.y += self.ball.vel.y;
     }
 
-    pub fn draw(self: Self) void {
+    pub fn draw(self: Projectile) void {
         JS.drawBall2D(self.ball);
     }
 };
@@ -37,31 +35,29 @@ pub const ProjectileArrayList = struct {
     const radius = 5.0;
     const color = RGBColor.init(255, 255, 255);
 
-    const Self = @This();
-
-    pub fn init() Self {
+    pub fn init() ProjectileArrayList {
         return .{
             .array_list = std.ArrayListUnmanaged(Projectile){},
         };
     }
 
-    pub fn reset(self: *Self, game_state: *GameState) void {
+    pub fn reset(self: *ProjectileArrayList, game_state: *GameState) void {
         self.array_list.clearAndFree(game_state.allocator);
     }
 
-    pub inline fn count(self: Self) usize {
+    pub inline fn count(self: ProjectileArrayList) usize {
         return self.array_list.items.len;
     }
 
-    pub inline fn delete(self: *Self, index: usize) void {
+    pub inline fn delete(self: *ProjectileArrayList, index: usize) void {
         _ = self.array_list.swapRemove(index);
     }
 
-    pub inline fn push(self: *Self, game_state: *GameState, projectile: Projectile) void {
+    pub inline fn push(self: *ProjectileArrayList, game_state: *GameState, projectile: Projectile) void {
         self.array_list.append(game_state.allocator, projectile) catch unreachable;
     }
 
-    pub fn emit(self: *Self, game_state: *GameState, client_pos: Vector2D) void {
+    pub fn emit(self: *ProjectileArrayList, game_state: *GameState, client_pos: Vector2D) void {
         const player_ball = game_state.player.ball;
 
         // The projectile's direction depends on event.clientX and event.clientY coming from JS.
@@ -77,7 +73,7 @@ pub const ProjectileArrayList = struct {
         self.push(game_state, projectile);
     }
 
-    pub fn step(self: *Self, game_state: *GameState) void {
+    pub fn step(self: *ProjectileArrayList, game_state: *GameState) void {
         const board = game_state.board;
         var items = self.array_list.items;
 

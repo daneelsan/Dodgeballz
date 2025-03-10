@@ -1,4 +1,5 @@
-//document.addEventListener("DOMContentLoaded", main, false);
+const text_decoder = new TextDecoder();
+let console_log_buffer = "";
 
 const startGameButton = document.getElementById("start-game-button");
 const currentScoreElement = document.getElementById("current-score");
@@ -19,10 +20,6 @@ function colorToStyle(r, g, b, a) {
 }
 
 /* WASM imported symbols */
-
-function jsRandom() {
-    return Math.random();
-}
 
 function jsClearRectangle(x, y, width, height) {
     // context.clearRect(x, y, width, height);
@@ -49,23 +46,6 @@ function jsUpdateScore(score) {
     currentScoreElement.innerHTML = score;
 }
 
-// Lots of jsConsole<type> functions. Leaving it here until I find a better way to print to console from wasm.
-function jsConsoleLogu32(n) {
-    console.log("u32: " + n);
-}
-
-function jsConsoleLogf32(n) {
-    console.log("f32: " + n);
-}
-
-function jsConsoleLogbool(b) {
-    console.log("bool: " + b);
-}
-
-function jsConsoleLogVector2D(x, y) {
-    console.log("{x: " + x + ", y:" + y + "}");
-}
-
 // See build.zig for reasoning
 var memory = new WebAssembly.Memory({
     initial: 17 /* pages */,
@@ -75,16 +55,23 @@ var memory = new WebAssembly.Memory({
 const wasm = {
     imports: {
         env: {
-            jsRandom: jsRandom,
+            jsRandom: function () {
+                return Math.random();
+            },
             jsClearRectangle: jsClearRectangle,
             jsDrawCircle: jsDrawCircle,
             jsDrawRectangle: jsDrawRectangle,
             jsUpdateScore: jsUpdateScore,
 
-            jsConsoleLogu32: jsConsoleLogu32,
-            jsConsoleLogf32: jsConsoleLogf32,
-            jsConsoleLogbool: jsConsoleLogbool,
-            jsConsoleLogVector2D: jsConsoleLogVector2D,
+            jsConsoleLogWrite: function (ptr, len) {
+                const str = text_decoder.decode(new Uint8Array(memory.buffer, ptr, len));
+                console_log_buffer += str;
+            },
+            jsConsoleLogFlush: function () {
+                console.log(console_log_buffer);
+                console_log_buffer = "";
+            },
+
             memory: memory,
         },
     },
